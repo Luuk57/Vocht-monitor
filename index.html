@@ -1,14 +1,3 @@
-Ja. Ik maak hem als één zelfstandige index.html voor GitHub Pages, met je bestaande Google Apps Script-koppeling als opslag.
-Ik zou daarbij het bestaande script-URL behouden en de monitor zo indelen:
-🏠 Home
-⚖️ Dialyse
-💧 Vocht
-❤️ Bloeddruk
-🚕 Taxirit
-📝 Notities
-💾 Opslaan naar Google Sheet
-De pagina wordt mobielvriendelijk met grote knoppen en de hoofdstukken openen/sluiten zonder dat je een lange pagina hoeft door te scrollen.
-Schrijven
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -1797,15 +1786,3 @@ async function dataOpslaan() {
 
 </body>
 </html>
-Eén belangrijke wijziging aan je Google Apps Script
-Omdat ik Taxirit heb toegevoegd, moet je Apps Script ook de nieuwe taxi-waarde opslaan. Je huidige script kent die kolom nog niet.
-Voeg daarom in de kopregel na Dranklog bijvoorbeeld toe:
-JavaScript
-"Taxirit",
-"Notities"
-en in appendRow():
-data.drankLog || "",
-data.taxi || "",
-data.notities || ""
-Dan werkt de GitHub-versie ook met de taxirit.
-Let op: dit is bewust een eerste GitHub-versie. De bestaande Google Apps Script-URL staat erin, maar je Apps Script moet eerst die extra Taxirit-kolom accepteren voordat alles volledig synchroon is.
