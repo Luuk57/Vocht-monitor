@@ -1,0 +1,25 @@
+VOCHT MONITOR - installatie
+
+BESTANDEN
+- index.html = de app
+- Code.gs = Google Apps Script voor een NIEUW Google Sheet
+- manifest.json = installatie als app
+- sw.js = basis offline-cache
+
+STAPPEN
+1. Maak een nieuw leeg Google Sheet.
+2. Extensies -> Apps Script.
+3. Verwijder de standaard Code.gs en plak de inhoud van Code.gs uit deze map.
+4. Opslaan.
+5. Implementeren -> Nieuwe implementatie -> Web-app.
+6. Uitvoeren als: Ik.
+7. Wie heeft toegang: Iedereen.
+8. Implementeer en kopieer de /exec URL.
+9. Open index.html in een teksteditor.
+10. Vervang PLak_HIER_DE_NIEUWE_APPS_SCRIPT_WEB_APP_URL door de nieuwe /exec URL.
+11. Zet index.html, manifest.json en sw.js op een HTTPS-webhost.
+12. Open de app en test één opslag.
+13. In het Sheet verschijnt automatisch een tabblad 'Metingen'.
+
+LET OP
+De app is een registratietool. De UF/vocht-waarschuwingen zijn rekenkundige signaleringen en vervangen geen individueel medisch advies of de afspraken van het dialyseteam.
