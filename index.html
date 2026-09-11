@@ -3,1784 +3,1177 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Dialysemonitor</title>
 
-<meta name="theme-color" content="#0284c7">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-
-<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<script src="https://cdn.tailwindcss.com"></script>
 
 <style>
-    body {
-        -webkit-tap-highlight-color: transparent;
-    }
+body {
+  background:#f3f4f6;
+  font-family:Arial,sans-serif;
+}
 
-    button {
-        touch-action: manipulation;
-    }
+button {
+  touch-action: manipulation;
+}
 
-    input,
-    textarea,
-    select {
-        font-size: 16px !important;
-    }
+.bigbtn {
+  min-height:58px;
+  font-size:20px;
+  font-weight:bold;
+  border-radius:14px;
+}
 
-    .drink-btn {
-        min-height: 64px;
-        font-size: 1.05rem;
-        font-weight: 800;
-    }
+.card {
+  background:white;
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
 
-    .menu-btn {
-        min-height: 92px;
-        font-size: 1.15rem;
-        font-weight: 800;
-    }
+input, textarea, select {
+  width:100%;
+  padding:13px;
+  border:1px solid #bbb;
+  border-radius:10px;
+  font-size:18px;
+  box-sizing:border-box;
+}
 
-    .big-number {
-        font-size: 2rem;
-        font-weight: 900;
-    }
+label {
+  display:block;
+  font-weight:bold;
+  margin-bottom:5px;
+}
 
-    .chapter {
-        display: none;
-    }
+.hidden-section {
+  display:none;
+}
 
-    .chapter.active {
-        display: block;
-    }
-
-    .home.active {
-        display: block;
-    }
-
-    .home {
-        display: none;
-    }
+.navbtn {
+  min-height:60px;
+  font-size:17px;
+  font-weight:bold;
+  border-radius:14px;
+}
 </style>
 </head>
 
-<body class="bg-slate-50 text-slate-800 min-h-screen">
+<body>
 
-<!-- =====================================================
-     HEADER
-===================================================== -->
-
-<header class="bg-sky-700 text-white shadow-md sticky top-0 z-50">
-
-    <div class="max-w-4xl mx-auto px-4 py-3
-                flex justify-between items-center">
-
-        <button
-            onclick="openChapter('home')"
-            class="text-xl font-bold">
-
-            💧 Dialysemonitor
-
-        </button>
-
-        <span
-            class="text-xs bg-sky-800 px-2 py-1 rounded-full">
-
-            GitHub
-
-        </span>
-
-    </div>
-
+<header class="sticky top-0 z-50 bg-white shadow p-3">
+  <h1 class="text-2xl font-bold text-center">💧 DIALYSEMONITOR</h1>
 </header>
 
+<main class="p-3 max-w-3xl mx-auto">
 
-<main class="max-w-4xl w-full mx-auto p-4 pb-24">
+<!-- MENU -->
+<div class="grid grid-cols-2 gap-3 mb-5">
 
-<!-- =====================================================
-     STATUS
-===================================================== -->
+<button class="navbtn bg-gray-200" onclick="toon('home')">
+🏠 Home
+</button>
 
-<div
-    id="statusMessage"
-    class="hidden mb-4 p-4 rounded-xl text-sm font-bold">
+<button class="navbtn bg-blue-200" onclick="toon('dialyse')">
+⚖️ Dialyse
+</button>
+
+<button class="navbtn bg-cyan-200" onclick="toon('vocht')">
+💧 Vocht
+</button>
+
+<button class="navbtn bg-red-200" onclick="toon('bloeddruk')">
+❤️ Bloeddruk
+</button>
+
+<button class="navbtn bg-yellow-200" onclick="toon('taxi')">
+🚕 Taxirit
+</button>
+
+<button class="navbtn bg-green-200" onclick="toon('opslaan')">
+📝 Opslaan
+</button>
+
 </div>
 
 
-<!-- =====================================================
-     HOME / HOOFDMENU
-===================================================== -->
+<!-- HOME -->
+<section id="home" class="card">
 
-<section id="home" class="home active">
+<h2 class="text-2xl font-bold mb-3">
+🏠 Home
+</h2>
 
-    <div class="bg-white rounded-2xl shadow-sm border p-5 mb-5">
+<p class="text-lg">
+Welkom bij je Dialysemonitor.
+</p>
 
-        <h2 class="text-2xl font-black mb-2">
-            Mijn Dialysemonitor
-        </h2>
+<p class="mt-3">
+De gegevens worden automatisch tijdelijk opgeslagen op dit apparaat.
+Je kunt de browser dus tussendoor sluiten.
+</p>
 
-        <p class="text-slate-500">
-            Kies hieronder wat je wilt invoeren.
-        </p>
-
-    </div>
-
-
-    <div class="grid grid-cols-2 gap-4">
-
-        <button
-            onclick="openChapter('dialyse')"
-            class="menu-btn bg-white border shadow-sm
-                   rounded-2xl p-4">
-
-            ⚖️<br>
-            Dialyse
-
-        </button>
-
-
-        <button
-            onclick="openChapter('vocht')"
-            class="menu-btn bg-white border shadow-sm
-                   rounded-2xl p-4">
-
-            💧<br>
-            Vocht
-
-        </button>
-
-
-        <button
-            onclick="openChapter('bloeddruk')"
-            class="menu-btn bg-white border shadow-sm
-                   rounded-2xl p-4">
-
-            ❤️<br>
-            Bloeddruk
-
-        </button>
-
-
-        <button
-            onclick="openChapter('taxi')"
-            class="menu-btn bg-white border shadow-sm
-                   rounded-2xl p-4">
-
-            🚕<br>
-            Taxirit
-
-        </button>
-
-
-        <button
-            onclick="openChapter('notities')"
-            class="menu-btn bg-white border shadow-sm
-                   rounded-2xl p-4 col-span-2">
-
-            📝<br>
-            Notities & Opslaan
-
-        </button>
-
-    </div>
+<div class="mt-4 p-4 bg-green-100 rounded-xl">
+<b>💾 Lokale opslag actief</b><br>
+Je ingevoerde gegevens worden automatisch bewaard.
+</div>
 
 </section>
 
 
-<!-- =====================================================
-     DIALYSE
-===================================================== -->
+<!-- DIALYSE -->
+<section id="dialyse" class="hidden-section">
 
-<section id="dialyse" class="chapter">
+<div class="card">
 
-    <button
-        onclick="openChapter('home')"
-        class="mb-4 bg-slate-200 px-4 py-3 rounded-xl font-bold">
+<h2 class="text-2xl font-bold mb-4">
+⚖️ Dialyse
+</h2>
 
-        ← Hoofdmenu
+<label>Dialyse</label>
+<select id="dialyseType" onchange="berekenUF(); bewaar()">
+<option value="nacht">Nacht +0,3 kg</option>
+<option value="dag">Dag +0,6 kg</option>
+</select>
 
-    </button>
+<div class="grid grid-cols-2 gap-3 mt-4">
 
+<div>
+<label>Start datum</label>
+<input type="date" id="startDatum" oninput="bewaar()">
+</div>
 
-    <div class="bg-white rounded-2xl shadow-sm border p-5 space-y-5">
+<div>
+<label>Eind datum</label>
+<input type="date" id="eindDatum" oninput="bewaar()">
+</div>
 
-        <h2 class="text-2xl font-black border-b pb-3">
-            ⚖️ Dialyse
-        </h2>
+</div>
 
+<div class="mt-4">
 
-        <!-- TYPE -->
+<label>Gewicht vóór dialyse (kg)</label>
+<input
+type="number"
+step="0.1"
+id="gewichtVoor"
+inputmode="decimal"
+oninput="berekenUF(); bewaar()">
 
-        <div>
+</div>
 
-            <label class="block text-xs font-bold uppercase
-                          text-slate-500 mb-2">
+<div class="mt-4">
 
-                Type dialyse
+<label>Drooggewicht (kg)</label>
+<input
+type="number"
+step="0.1"
+id="drooggewicht"
+value="118"
+inputmode="decimal"
+oninput="berekenUF(); bewaar()">
 
-            </label>
+</div>
 
+<div class="mt-4">
 
-            <div class="grid grid-cols-2 gap-3">
+<label>Gewicht na dialyse (kg)</label>
+<input
+type="number"
+step="0.1"
+id="gewichtNa"
+inputmode="decimal"
+oninput="berekenUF(); bewaar()">
 
-                <button
-                    id="nachtBtn"
-                    onclick="setDialyseType('nacht')"
-                    class="py-4 rounded-xl
-                           bg-sky-600 text-white font-bold">
+</div>
 
-                    🌙 Nacht<br>
-                    <span class="text-xs">
-                        +0,3 kg
-                    </span>
+<div class="mt-4 p-4 bg-blue-50 rounded-xl">
 
-                </button>
+<div class="text-lg">
+<b>Toeslag:</b>
+<span id="toeslagTekst">0,3 kg</span>
+</div>
 
+<div class="text-xl mt-2">
+<b>Geplande UF:</b>
+<span id="geplandeUF">-</span> kg
+</div>
 
-                <button
-                    id="dagBtn"
-                    onclick="setDialyseType('dag')"
-                    class="py-4 rounded-xl
-                           bg-slate-200 text-slate-700 font-bold">
+<div class="text-xl mt-2">
+<b>Werkelijke UF:</b>
+<span id="werkelijkeUF">-</span> kg
+</div>
 
-                    ☀️ Dag<br>
-                    <span class="text-xs">
-                        +0,6 kg
-                    </span>
+</div>
 
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <!-- DATUM -->
-
-        <div class="grid grid-cols-2 gap-3">
-
-            <div>
-
-                <label class="block text-xs font-bold
-                              uppercase text-slate-500 mb-1">
-
-                    Start datum
-
-                </label>
-
-                <input
-                    type="date"
-                    id="startDate"
-                    class="w-full bg-slate-50 border
-                           rounded-xl p-3">
-
-            </div>
-
-
-            <div>
-
-                <label class="block text-xs font-bold
-                              uppercase text-slate-500 mb-1">
-
-                    Eind datum
-
-                </label>
-
-                <input
-                    type="date"
-                    id="endDate"
-                    class="w-full bg-slate-50 border
-                           rounded-xl p-3">
-
-            </div>
-
-        </div>
-
-
-        <!-- GEWICHT -->
-
-        <div class="space-y-4">
-
-            <div>
-
-                <label class="block text-xs font-bold
-                              uppercase text-slate-500 mb-1">
-
-                    Gewicht vóór dialyse
-
-                </label>
-
-                <input
-                    type="number"
-                    step="0.1"
-                    id="preWeight"
-                    placeholder="118.5"
-                    oninput="berekenUF()"
-                    class="w-full bg-slate-50 border
-                           rounded-xl p-4">
-
-            </div>
-
-
-            <div>
-
-                <label class="block text-xs font-bold
-                              uppercase text-slate-500 mb-1">
-
-                    Drooggewicht
-
-                </label>
-
-                <input
-                    type="number"
-                    step="0.1"
-                    id="dryWeight"
-                    value="118"
-                    oninput="berekenUF()"
-                    class="w-full bg-slate-50 border
-                           rounded-xl p-4">
-
-            </div>
-
-
-            <div>
-
-                <label class="block text-xs font-bold
-                              uppercase text-slate-500 mb-1">
-
-                    Gewicht na dialyse
-
-                </label>
-
-                <input
-                    type="number"
-                    step="0.1"
-                    id="postWeight"
-                    placeholder="116.0"
-                    oninput="berekenUF()"
-                    class="w-full bg-slate-50 border
-                           rounded-xl p-4">
-
-            </div>
-
-        </div>
-
-
-        <!-- UF -->
-
-        <div class="p-5 rounded-xl border bg-slate-50">
-
-            <div class="text-xs font-bold uppercase
-                        text-slate-500">
-
-                Geplande UF
-
-            </div>
-
-            <div id="ufResult" class="big-number">
-                0.00 kg
-            </div>
-
-            <div id="ufExplanation"
-                 class="text-sm text-slate-500">
-
-                Vul gewicht vóór dialyse in.
-
-            </div>
-
-            <div
-                id="ufBadge"
-                class="mt-3 inline-block px-4 py-2
-                       rounded-lg font-bold bg-slate-200">
-
-                Nog geen berekening
-
-            </div>
-
-        </div>
-
-
-        <!-- WERKELIJK -->
-
-        <div class="p-4 rounded-xl bg-slate-50 border">
-
-            <div class="text-xs font-bold uppercase
-                        text-slate-500">
-
-                Werkelijk gewichtsverlies
-
-            </div>
-
-            <div id="actualUF"
-                 class="text-2xl font-extrabold">
-
-                0.00 kg
-
-            </div>
-
-            <div id="actualUFText"
-                 class="text-sm text-slate-500">
-
-                Vul ook het gewicht na dialyse in.
-
-            </div>
-
-        </div>
-
-    </div>
-
+</div>
 </section>
 
 
-<!-- =====================================================
-     VOCHT
-===================================================== -->
+<!-- VOCHT -->
+<section id="vocht" class="hidden-section">
 
-<section id="vocht" class="chapter">
+<div class="card">
 
-    <button
-        onclick="openChapter('home')"
-        class="mb-4 bg-slate-200 px-4 py-3 rounded-xl font-bold">
+<h2 class="text-2xl font-bold mb-4">
+💧 Vocht
+</h2>
 
-        ← Hoofdmenu
+<div class="p-4 bg-blue-50 rounded-xl mb-4">
 
-    </button>
+<div class="text-xl">
+Daglimiet: <b>1000 ml</b>
+</div>
 
+<div class="text-3xl font-bold mt-2">
+<span id="totaalVocht">0</span> ml
+</div>
 
-    <div class="bg-white rounded-2xl shadow-sm border p-5 space-y-5">
+<div id="vochtMelding" class="mt-2 font-bold"></div>
 
-        <h2 class="text-2xl font-black border-b pb-3">
-            💧 Vocht
-        </h2>
+</div>
 
+<h3 class="text-xl font-bold mb-3">
+🥤 Drinken
+</h3>
 
-        <!-- TOTAAL -->
+<div class="grid grid-cols-2 gap-3">
 
-        <div class="p-5 rounded-xl bg-sky-50
-                    border border-sky-100">
+<button class="bigbtn bg-cyan-100" onclick="voegDrankToe(75)">75 ml</button>
+<button class="bigbtn bg-cyan-100" onclick="voegDrankToe(100)">100 ml</button>
 
-            <div class="text-xs font-bold uppercase
-                        text-sky-700">
+<button class="bigbtn bg-cyan-100" onclick="voegDrankToe(125)">125 ml</button>
+<button class="bigbtn bg-cyan-100" onclick="voegDrankToe(150)">150 ml</button>
 
-                Vandaag totaal
+<button class="bigbtn bg-cyan-100" onclick="voegDrankToe(175)">175 ml</button>
+<button class="bigbtn bg-cyan-100" onclick="voegDrankToe(200)">200 ml</button>
 
-            </div>
+<button class="bigbtn bg-cyan-100" onclick="voegDrankToe(250)">250 ml</button>
+<button class="bigbtn bg-cyan-100" onclick="voegDrankToe(330)">330 ml</button>
 
-            <div id="totaalVochtResult"
-                 class="big-number text-sky-700">
+</div>
 
-                0 ml
+<div class="mt-4">
 
-            </div>
+<label>Anders drinken (ml)</label>
 
-            <div id="resterendVocht"
-                 class="font-bold text-slate-600">
+<div class="flex gap-2">
 
-                Resterend: 1000 ml
+<input
+type="number"
+id="andersDrinken"
+inputmode="numeric"
+placeholder="bijv. 120">
 
-            </div>
+<button
+class="bigbtn bg-cyan-200 px-5"
+onclick="andersDrinkenToevoegen()">
++
+</button>
 
-            <div id="vochtAlertBadge"
-                 class="mt-3 inline-block px-4 py-2
-                        rounded-lg font-bold
-                        bg-emerald-100 text-emerald-800">
+</div>
 
-                🟢 Binnen limiet
+</div>
 
-            </div>
+<div class="mt-5">
 
-        </div>
+<label>Eten / overig vocht (ml)</label>
 
+<input
+type="number"
+id="etenVocht"
+inputmode="numeric"
+oninput="berekenVocht(); bewaar()">
 
-        <!-- DRINKKNOPPEN -->
+</div>
 
-        <div>
+<h3 class="text-xl font-bold mt-5 mb-3">
+📋 Dranklog
+</h3>
 
-            <h3 class="font-bold mb-3">
-                Snel drinken toevoegen
-            </h3>
+<div id="drankLog"></div>
 
-
-            <div class="grid grid-cols-2 gap-3">
-
-                <button class="drink-btn bg-sky-100
-                               text-sky-800 rounded-xl"
-                        onclick="voegDrinkToe(75)">
-                    75 ml
-                </button>
-
-                <button class="drink-btn bg-sky-100
-                               text-sky-800 rounded-xl"
-                        onclick="voegDrinkToe(100)">
-                    100 ml
-                </button>
-
-                <button class="drink-btn bg-sky-100
-                               text-sky-800 rounded-xl"
-                        onclick="voegDrinkToe(125)">
-                    125 ml
-                </button>
-
-                <button class="drink-btn bg-sky-100
-                               text-sky-800 rounded-xl"
-                        onclick="voegDrinkToe(150)">
-                    150 ml
-                </button>
-
-                <button class="drink-btn bg-sky-100
-                               text-sky-800 rounded-xl"
-                        onclick="voegDrinkToe(175)">
-                    175 ml
-                </button>
-
-                <button class="drink-btn bg-sky-100
-                               text-sky-800 rounded-xl"
-                        onclick="voegDrinkToe(200)">
-                    200 ml
-                </button>
-
-                <button class="drink-btn bg-sky-100
-                               text-sky-800 rounded-xl"
-                        onclick="voegDrinkToe(250)">
-                    250 ml
-                </button>
-
-                <button class="drink-btn bg-sky-100
-                               text-sky-800 rounded-xl"
-                        onclick="voegDrinkToe(330)">
-                    330 ml
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <!-- EIGEN -->
-
-        <div class="flex gap-2">
-
-            <input
-                type="number"
-                id="eigenDrink"
-                placeholder="Andere hoeveelheid ml"
-                class="flex-1 bg-slate-50 border
-                       rounded-xl p-4">
-
-            <button
-                onclick="voegEigenDrinkToe()"
-                class="bg-sky-600 text-white
-                       font-bold px-5 rounded-xl">
-
-                +
-
-            </button>
-
-        </div>
-
-
-        <!-- ETEN -->
-
-        <div>
-
-            <label class="block text-xs font-bold
-                          uppercase text-slate-500 mb-1">
-
-                Eten / overig vocht
-
-            </label>
-
-            <input
-                type="number"
-                id="etenVocht"
-                value="0"
-                oninput="berekenVocht()"
-                class="w-full bg-slate-50 border
-                       rounded-xl p-4">
-
-        </div>
-
-
-        <!-- LOG -->
-
-        <div>
-
-            <h3 class="font-bold mb-2">
-                📋 Ingevoerde dranken
-            </h3>
-
-            <div id="drinkLog"
-                 class="space-y-2">
-            </div>
-
-        </div>
-
-    </div>
-
+</div>
 </section>
 
 
-<!-- =====================================================
-     BLOEDDRUK
-===================================================== -->
+<!-- BLOEDDRUK -->
+<section id="bloeddruk" class="hidden-section">
 
-<section id="bloeddruk" class="chapter">
+<div class="card">
 
-    <button
-        onclick="openChapter('home')"
-        class="mb-4 bg-slate-200 px-4 py-3 rounded-xl font-bold">
+<h2 class="text-2xl font-bold mb-4">
+❤️ Bloeddruk
+</h2>
 
-        ← Hoofdmenu
+<div class="grid grid-cols-2 gap-3">
 
-    </button>
+<div>
+<label>Datum</label>
+<input type="date" id="bpDatum" oninput="bewaar()">
+</div>
 
+<div>
+<label>Tijd</label>
+<input type="time" id="bpTijd" oninput="bewaar()">
+</div>
 
-    <div class="bg-white rounded-2xl shadow-sm border p-5 space-y-4">
+</div>
 
-        <div class="flex justify-between items-center
-                    border-b pb-3">
+<div class="mt-4">
 
-            <h2 class="text-2xl font-black">
-                ❤️ Bloeddruk
-            </h2>
+<label>Omschrijving</label>
+<input
+id="bpLabel"
+placeholder="bijv. vóór dialyse"
+oninput="bewaar()">
 
-            <button
-                onclick="addBPMeting()"
-                class="bg-sky-100 text-sky-700
-                       font-bold px-3 py-2 rounded-lg">
+</div>
 
-                + Meting
+<div class="grid grid-cols-3 gap-2 mt-4">
 
-            </button>
+<div>
+<label>SYS</label>
+<input
+type="number"
+id="bpSys"
+inputmode="numeric"
+oninput="bewaar()">
+</div>
 
-        </div>
+<div>
+<label>DIA</label>
+<input
+type="number"
+id="bpDia"
+inputmode="numeric"
+oninput="bewaar()">
+</div>
 
+<div>
+<label>HR</label>
+<input
+type="number"
+id="bpHr"
+inputmode="numeric"
+oninput="bewaar()">
+</div>
 
-        <div id="bpContainer"
-             class="space-y-3">
-        </div>
+</div>
 
-    </div>
+<button
+class="bigbtn bg-red-100 w-full mt-4"
+onclick="voegBloeddrukToe()">
 
+➕ Bloeddruk toevoegen
+
+</button>
+
+<div id="bpLog" class="mt-4"></div>
+
+<p class="mt-3 text-gray-600">
+MAP laten we voorlopig buiten beschouwing.
+</p>
+
+</div>
 </section>
 
 
-<!-- =====================================================
-     TAXI
-===================================================== -->
+<!-- TAXI -->
+<section id="taxi" class="hidden-section">
 
-<section id="taxi" class="chapter">
+<div class="card">
 
-    <button
-        onclick="openChapter('home')"
-        class="mb-4 bg-slate-200 px-4 py-3 rounded-xl font-bold">
+<h2 class="text-2xl font-bold mb-4">
+🚕 Taxirit
+</h2>
 
-        ← Hoofdmenu
+<h3 class="text-xl font-bold">
+Heenrit
+</h3>
 
-    </button>
+<div class="grid grid-cols-2 gap-3 mt-3">
 
+<div>
+<label>Vertrek</label>
+<input type="time" id="heenVertrek" oninput="bewaar()">
+</div>
 
-    <div class="bg-white rounded-2xl shadow-sm border p-5 space-y-5">
+<div>
+<label>Aankomst</label>
+<input type="time" id="heenAankomst" oninput="bewaar()">
+</div>
 
-        <h2 class="text-2xl font-black border-b pb-3">
-            🚕 Taxirit
-        </h2>
+</div>
 
+<div class="mt-3">
 
-        <!-- HEEN -->
+<label>Opmerking</label>
+<input id="heenNotitie" oninput="bewaar()">
 
-        <div class="border rounded-2xl p-4 space-y-4">
+</div>
 
-            <h3 class="text-lg font-black">
-                🚕 Heenrit
-            </h3>
+<hr class="my-6">
 
-            <div class="grid grid-cols-2 gap-3">
+<h3 class="text-xl font-bold">
+Terugrit
+</h3>
 
-                <div>
+<div class="grid grid-cols-2 gap-3 mt-3">
 
-                    <label class="block text-xs font-bold
-                                  uppercase text-slate-500">
+<div>
+<label>Vertrek</label>
+<input type="time" id="terugVertrek" oninput="bewaar()">
+</div>
 
-                        Vertrek
+<div>
+<label>Aankomst</label>
+<input type="time" id="terugAankomst" oninput="bewaar()">
+</div>
 
-                    </label>
+</div>
 
-                    <input
-                        type="time"
-                        id="taxiHeenVertrek"
-                        class="w-full bg-slate-50 border
-                               rounded-xl p-3">
+<div class="mt-3">
 
-                </div>
+<label>Opmerking</label>
+<input id="terugNotitie" oninput="bewaar()">
 
+</div>
 
-                <div>
-
-                    <label class="block text-xs font-bold
-                                  uppercase text-slate-500">
-
-                        Aankomst
-
-                    </label>
-
-                    <input
-                        type="time"
-                        id="taxiHeenAankomst"
-                        class="w-full bg-slate-50 border
-                               rounded-xl p-3">
-
-                </div>
-
-            </div>
-
-
-            <textarea
-                id="taxiHeenNotitie"
-                rows="2"
-                placeholder="Opmerking heenrit..."
-                class="w-full bg-slate-50 border
-                       rounded-xl p-3">
-            </textarea>
-
-        </div>
-
-
-        <!-- TERUG -->
-
-        <div class="border rounded-2xl p-4 space-y-4">
-
-            <h3 class="text-lg font-black">
-                🚕 Terugrit
-            </h3>
-
-            <div class="grid grid-cols-2 gap-3">
-
-                <div>
-
-                    <label class="block text-xs font-bold
-                                  uppercase text-slate-500">
-
-                        Vertrek
-
-                    </label>
-
-                    <input
-                        type="time"
-                        id="taxiTerugVertrek"
-                        class="w-full bg-slate-50 border
-                               rounded-xl p-3">
-
-                </div>
-
-
-                <div>
-
-                    <label class="block text-xs font-bold
-                                  uppercase text-slate-500">
-
-                        Aankomst
-
-                    </label>
-
-                    <input
-                        type="time"
-                        id="taxiTerugAankomst"
-                        class="w-full bg-slate-50 border
-                               rounded-xl p-3">
-
-                </div>
-
-            </div>
-
-
-            <textarea
-                id="taxiTerugNotitie"
-                rows="2"
-                placeholder="Opmerking terugrit..."
-                class="w-full bg-slate-50 border
-                       rounded-xl p-3">
-            </textarea>
-
-        </div>
-
-    </div>
-
+</div>
 </section>
 
 
-<!-- =====================================================
-     NOTITIES / OPSLAAN
-===================================================== -->
+<!-- OPSLAAN -->
+<section id="opslaan" class="hidden-section">
 
-<section id="notities" class="chapter">
+<div class="card">
 
-    <button
-        onclick="openChapter('home')"
-        class="mb-4 bg-slate-200 px-4 py-3 rounded-xl font-bold">
+<h2 class="text-2xl font-bold mb-4">
+📝 Notities & Opslaan
+</h2>
 
-        ← Hoofdmenu
+<label>Notities</label>
 
-    </button>
+<textarea
+id="notities"
+rows="5"
+placeholder="Eventuele opmerkingen..."
+oninput="bewaar()"></textarea>
 
+<button
+class="bigbtn bg-green-500 text-white w-full mt-5"
+onclick="dataOpslaan()">
 
-    <div class="bg-white rounded-2xl shadow-sm border
-                p-5 space-y-5">
+💾 OPSLAAN NAAR GOOGLE SHEET
 
-        <h2 class="text-2xl font-black border-b pb-3">
-            📝 Notities & Opslaan
-        </h2>
+</button>
 
+<div id="status"
+class="mt-4 text-center text-lg font-bold">
+</div>
 
-        <textarea
-            id="notities"
-            rows="5"
-            placeholder="Bijzonderheden..."
-            class="w-full bg-slate-50 border
-                   rounded-xl p-4">
-        </textarea>
+<div class="mt-5 p-4 bg-yellow-50 rounded-xl">
 
+<b>💾 Belangrijk</b>
 
-        <button
-            onclick="dataOpslaan()"
-            id="saveBtn"
-            class="w-full bg-sky-600 hover:bg-sky-700
-                   text-white font-bold py-5
-                   rounded-xl shadow-lg text-lg">
+<p class="mt-2">
+Je gegevens worden ook automatisch op dit apparaat opgeslagen.
+Als je de app tussendoor sluit, blijven je gegevens dus staan.
+</p>
 
-            💾 Opslaan naar Google Sheet
+</div>
 
-        </button>
+<button
+class="bigbtn bg-gray-200 w-full mt-4"
+onclick="wisAlles()">
 
-    </div>
+🗑️ Nieuwe meting / alles wissen
 
+</button>
+
+</div>
 </section>
 
 </main>
 
 
-<!-- =====================================================
-     JAVASCRIPT
-===================================================== -->
-
 <script>
 
-/* =====================================================
+/* =========================
    GOOGLE APPS SCRIPT
-===================================================== */
+========================= */
 
 const WEB_APP_URL =
 "https://script.google.com/macros/s/AKfycby5PrpNG3ncZyjzUDI5bEPC3D8KWhRr-wDq5kBeM1r20WiXAPXJWnXvCVgaRnusRcIE/exec";
 
 
-/* =====================================================
-   INSTELLINGEN
-===================================================== */
+/* =========================
+   GEGEVENS
+========================= */
 
-const VOCHT_LIMIET = 1000;
-
-let dialyseType = "nacht";
-
-let drinkRegistraties = [];
+let drankLog = [];
+let bpLog = [];
 
 
-/* =====================================================
-   START
-===================================================== */
+/* =========================
+   MENU
+========================= */
 
-window.onload = function() {
+function toon(id) {
 
-    const vandaag =
-        new Date().toISOString().split("T")[0];
+  document.querySelectorAll("section").forEach(s => {
+    s.classList.add("hidden-section");
+  });
 
-    document.getElementById("startDate").value =
-        vandaag;
-
-    document.getElementById("endDate").value =
-        vandaag;
-
-    setDialyseType("nacht");
-
-    addBPMeting("Voor dialyse");
-
-    berekenVocht();
-
-};
-
-
-/* =====================================================
-   HOOFDSTUK NAVIGATIE
-===================================================== */
-
-function openChapter(chapter) {
-
-    document.querySelectorAll(".chapter")
-        .forEach(el => el.classList.remove("active"));
-
-    document.querySelectorAll(".home")
-        .forEach(el => el.classList.remove("active"));
-
-
-    if(chapter === "home") {
-
-        document
-            .getElementById("home")
-            .classList.add("active");
-
-    } else {
-
-        const element =
-            document.getElementById(chapter);
-
-        if(element) {
-            element.classList.add("active");
-        }
-
-    }
-
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+  document.getElementById(id).classList.remove("hidden-section");
 
 }
 
 
-/* =====================================================
-   DIALYSE TYPE
-===================================================== */
-
-function setDialyseType(type) {
-
-    dialyseType = type;
-
-    const nacht =
-        document.getElementById("nachtBtn");
-
-    const dag =
-        document.getElementById("dagBtn");
-
-
-    if(type === "nacht") {
-
-        nacht.className =
-        "py-4 rounded-xl bg-sky-600 text-white font-bold";
-
-        dag.className =
-        "py-4 rounded-xl bg-slate-200 text-slate-700 font-bold";
-
-    } else {
-
-        dag.className =
-        "py-4 rounded-xl bg-sky-600 text-white font-bold";
-
-        nacht.className =
-        "py-4 rounded-xl bg-slate-200 text-slate-700 font-bold";
-
-    }
-
-
-    berekenUF();
-
-}
-
-
-/* =====================================================
-   UF
-===================================================== */
+/* =========================
+   DIALYSE
+========================= */
 
 function berekenUF() {
 
-    const pre =
-        parseFloat(
-            document.getElementById("preWeight").value
-        );
+  const type =
+    document.getElementById("dialyseType").value;
 
-    const dry =
-        parseFloat(
-            document.getElementById("dryWeight").value
-        );
+  const voor =
+    parseFloat(document.getElementById("gewichtVoor").value);
 
-    const post =
-        parseFloat(
-            document.getElementById("postWeight").value
-        );
+  const droog =
+    parseFloat(document.getElementById("drooggewicht").value);
 
+  const na =
+    parseFloat(document.getElementById("gewichtNa").value);
 
-    const toeslag =
-        dialyseType === "nacht"
-        ? 0.3
-        : 0.6;
+  const toeslag =
+    type === "nacht" ? 0.3 : 0.6;
 
+  document.getElementById("toeslagTekst").textContent =
+    toeslag.toFixed(1).replace(".", ",") + " kg";
 
-    const ufResult =
-        document.getElementById("ufResult");
-
-    const explanation =
-        document.getElementById("ufExplanation");
-
-    const badge =
-        document.getElementById("ufBadge");
-
-
-    if(!Number.isFinite(pre) ||
-       !Number.isFinite(dry)) {
-
-        ufResult.innerText =
-            "0.00 kg";
-
-        explanation.innerText =
-            "Vul gewicht vóór dialyse en drooggewicht in.";
-
-        badge.innerText =
-            "Nog geen berekening";
-
-        badge.className =
-            "mt-3 inline-block px-4 py-2 rounded-lg font-bold bg-slate-200";
-
-        return;
-
-    }
-
+  if (!isNaN(voor) && !isNaN(droog)) {
 
     const uf =
-        pre - dry + toeslag;
+      voor - droog + toeslag;
 
+    document.getElementById("geplandeUF").textContent =
+      uf.toFixed(1).replace(".", ",");
 
-    ufResult.innerText =
-        uf.toFixed(2) + " kg";
+  } else {
 
+    document.getElementById("geplandeUF").textContent = "-";
 
-    explanation.innerText =
-        `${pre.toFixed(1)} − ${dry.toFixed(1)} + ${toeslag.toFixed(1)} kg`;
+  }
 
+  if (!isNaN(voor) && !isNaN(na)) {
 
-    if(uf >= 4.5) {
+    const uf =
+      voor - na;
 
-        badge.innerText =
-            "🔴 UF hoog – ≥ 4,5 kg";
+    document.getElementById("werkelijkeUF").textContent =
+      uf.toFixed(1).replace(".", ",");
 
-        badge.className =
-            "mt-3 inline-block px-4 py-2 rounded-lg font-bold bg-red-500 text-white";
+  } else {
 
-    } else if(uf >= 4.0) {
+    document.getElementById("werkelijkeUF").textContent = "-";
 
-        badge.innerText =
-            "🟠 UF opletten – ≥ 4,0 kg";
-
-        badge.className =
-            "mt-3 inline-block px-4 py-2 rounded-lg font-bold bg-orange-500 text-white";
-
-    } else {
-
-        badge.innerText =
-            "🟢 UF < 4,0 kg";
-
-        badge.className =
-            "mt-3 inline-block px-4 py-2 rounded-lg font-bold bg-emerald-500 text-white";
-
-    }
-
-
-    if(Number.isFinite(post)) {
-
-        const werkelijk =
-            pre - post;
-
-        document.getElementById("actualUF")
-            .innerText =
-            werkelijk.toFixed(2) + " kg";
-
-
-        const verschil =
-            werkelijk - uf;
-
-
-        document.getElementById("actualUFText")
-            .innerText =
-            `Gepland: ${uf.toFixed(2)} kg | Verschil: ${verschil.toFixed(2)} kg`;
-
-    } else {
-
-        document.getElementById("actualUF")
-            .innerText =
-            "0.00 kg";
-
-        document.getElementById("actualUFText")
-            .innerText =
-            "Vul ook het gewicht na dialyse in.";
-
-    }
+  }
 
 }
 
 
-/* =====================================================
+/* =========================
    VOCHT
-===================================================== */
+========================= */
 
-function voegDrinkToe(ml) {
+function voegDrankToe(ml) {
 
-    const tijd =
-        new Date().toLocaleTimeString(
-            "nl-NL",
-            {
-                hour: "2-digit",
-                minute: "2-digit"
-            }
-        );
+  drankLog.push({
+    tijd: new Date().toLocaleTimeString("nl-NL", {
+      hour:"2-digit",
+      minute:"2-digit"
+    }),
+    ml: ml
+  });
 
-
-    drinkRegistraties.push({
-        ml: ml,
-        tijd: tijd
-    });
-
-
-    renderDrinkLog();
-
-    berekenVocht();
+  tekenDrankLog();
+  berekenVocht();
+  bewaar();
 
 }
 
 
-function voegEigenDrinkToe() {
+function andersDrinkenToevoegen() {
 
-    const input =
-        document.getElementById("eigenDrink");
+  const input =
+    document.getElementById("andersDrinken");
 
-    const ml =
-        parseFloat(input.value);
+  const ml =
+    parseFloat(input.value);
 
+  if (isNaN(ml) || ml <= 0) return;
 
-    if(!Number.isFinite(ml) || ml <= 0)
-        return;
+  voegDrankToe(ml);
 
-
-    voegDrinkToe(ml);
-
-    input.value = "";
+  input.value = "";
 
 }
 
 
-function renderDrinkLog() {
+function verwijderDrank(index) {
 
-    const log =
-        document.getElementById("drinkLog");
+  drankLog.splice(index, 1);
 
-    log.innerHTML = "";
-
-
-    [...drinkRegistraties]
-        .reverse()
-        .forEach((drink, index) => {
-
-            const echteIndex =
-                drinkRegistraties.length - 1 - index;
-
-
-            const row =
-                document.createElement("div");
-
-
-            row.className =
-                "flex justify-between items-center " +
-                "bg-slate-50 border rounded-xl p-3";
-
-
-            row.innerHTML = `
-                <div>
-                    <strong>${drink.ml} ml</strong>
-                    <span class="text-xs text-slate-400 ml-2">
-                        ${drink.tijd}
-                    </span>
-                </div>
-
-                <button
-                    onclick="verwijderDrink(${echteIndex})"
-                    class="text-red-500 font-bold px-3">
-
-                    X
-
-                </button>
-            `;
-
-
-            log.appendChild(row);
-
-        });
+  tekenDrankLog();
+  berekenVocht();
+  bewaar();
 
 }
 
 
-function verwijderDrink(index) {
+function tekenDrankLog() {
 
-    drinkRegistraties.splice(index, 1);
+  const div =
+    document.getElementById("drankLog");
 
-    renderDrinkLog();
+  if (!drankLog.length) {
 
-    berekenVocht();
+    div.innerHTML =
+      "<p class='text-gray-500'>Nog geen drinken ingevoerd.</p>";
+
+    return;
+  }
+
+  div.innerHTML =
+    drankLog.map((item,index) => `
+
+      <div class="flex justify-between items-center
+                  p-3 mb-2 bg-gray-100 rounded-xl">
+
+        <span>
+          ${item.tijd} — <b>${item.ml} ml</b>
+        </span>
+
+        <button
+          class="bg-red-200 px-4 py-2 rounded-xl"
+          onclick="verwijderDrank(${index})">
+
+          ❌
+
+        </button>
+
+      </div>
+
+    `).join("");
 
 }
 
 
 function berekenVocht() {
 
-    const drink =
-        drinkRegistraties.reduce(
-            (totaal, item) =>
-                totaal + Number(item.ml),
-            0
-        );
-
-
-    const eten =
-        parseFloat(
-            document.getElementById("etenVocht").value
-        ) || 0;
-
-
-    const totaal =
-        drink + eten;
-
-
-    document.getElementById(
-        "totaalVochtResult"
-    ).innerText =
-        totaal + " ml";
-
-
-    const resterend =
-        VOCHT_LIMIET - totaal;
-
-
-    document.getElementById(
-        "resterendVocht"
-    ).innerText =
-        resterend >= 0
-        ? `Resterend: ${resterend} ml`
-        : `⚠️ ${Math.abs(resterend)} ml boven limiet`;
-
-
-    const badge =
-        document.getElementById(
-            "vochtAlertBadge"
-        );
-
-
-    if(totaal > VOCHT_LIMIET) {
-
-        badge.innerText =
-            "🔴 LIMIET OVERSCHREDEN";
-
-        badge.className =
-            "mt-3 inline-block px-4 py-2 rounded-lg font-bold bg-red-500 text-white";
-
-    } else if(totaal >= 750) {
-
-        badge.innerText =
-            "🟠 75% bereikt – opletten";
-
-        badge.className =
-            "mt-3 inline-block px-4 py-2 rounded-lg font-bold bg-orange-100 text-orange-800";
-
-    } else {
-
-        badge.innerText =
-            "🟢 Binnen limiet";
-
-        badge.className =
-            "mt-3 inline-block px-4 py-2 rounded-lg font-bold bg-emerald-100 text-emerald-800";
-
-    }
-
-}
-
-
-/* =====================================================
-   BLOEDDRUK
-===================================================== */
-
-function addBPMeting(labelTekst = "Tijdens / Na") {
-
-    const container =
-        document.getElementById("bpContainer");
-
-
-    const rowId =
-        "bp_" +
-        Date.now() +
-        "_" +
-        Math.floor(Math.random() * 1000);
-
-
-    const tijd =
-        new Date().toLocaleTimeString(
-            "nl-NL",
-            {
-                hour: "2-digit",
-                minute: "2-digit"
-            }
-        );
-
-
-    const html = `
-
-        <div id="${rowId}"
-             class="bg-slate-50 border rounded-xl p-3 space-y-3">
-
-            <div class="flex justify-between gap-2">
-
-                <input
-                    type="text"
-                    value="${labelTekst}"
-                    class="bp-label flex-1 bg-white
-                           border rounded-lg p-2 font-medium">
-
-                <span
-                    class="bp-time text-xs text-slate-400 p-2">
-
-                    ${tijd}
-
-                </span>
-
-            </div>
-
-
-            <div class="grid grid-cols-3 gap-2">
-
-                <input
-                    type="number"
-                    placeholder="SYS"
-                    class="bp-sys bg-white border
-                           rounded-lg p-3 text-center">
-
-                <input
-                    type="number"
-                    placeholder="DIA"
-                    class="bp-dia bg-white border
-                           rounded-lg p-3 text-center">
-
-                <input
-                    type="number"
-                    placeholder="HR"
-                    class="bp-hr bg-white border
-                           rounded-lg p-3 text-center">
-
-            </div>
-
-
-            <div class="flex justify-between
-                        items-center gap-2">
-
-                <span
-                    class="bp-map text-sm font-bold
-                           text-slate-500">
-
-                    MAP: -
-
-                </span>
-
-
-                <button
-                    onclick="berekenMAP(this)"
-                    class="bg-sky-100 text-sky-700
-                           px-3 py-2 rounded-lg font-bold">
-
-                    MAP
-
-                </button>
-
-
-                <button
-                    onclick="document.getElementById('${rowId}').remove()"
-                    class="text-red-500 font-bold">
-
-                    X
-
-                </button>
-
-            </div>
-
-        </div>
-
-    `;
-
-
-    container.insertAdjacentHTML(
-        "beforeend",
-        html
+  let totaal =
+    drankLog.reduce(
+      (sum,item) => sum + Number(item.ml),
+      0
     );
 
+  const eten =
+    parseFloat(
+      document.getElementById("etenVocht").value
+    ) || 0;
+
+  totaal += eten;
+
+  document.getElementById("totaalVocht").textContent =
+    totaal;
+
+  const melding =
+    document.getElementById("vochtMelding");
+
+  if (totaal >= 1000) {
+
+    melding.textContent =
+      "🔴 DAGLIMIET BEREIKT / OVERSCHREDEN";
+
+  } else if (totaal >= 750) {
+
+    melding.textContent =
+      "🟠 75% van de daglimiet bereikt";
+
+  } else {
+
+    melding.textContent = "";
+
+  }
+
 }
 
 
-function berekenMAP(button) {
+/* =========================
+   BLOEDDRUK
+========================= */
 
-    const row =
-        button.closest(".bg-slate-50");
+function voegBloeddrukToe() {
+
+  const datum =
+    document.getElementById("bpDatum").value;
+
+  const tijd =
+    document.getElementById("bpTijd").value;
+
+  const label =
+    document.getElementById("bpLabel").value;
+
+  const sys =
+    document.getElementById("bpSys").value;
+
+  const dia =
+    document.getElementById("bpDia").value;
+
+  const hr =
+    document.getElementById("bpHr").value;
+
+  if (!sys || !dia || !hr) {
+
+    alert("Vul SYS, DIA en hartslag in.");
+
+    return;
+
+  }
+
+  bpLog.push({
+    datum,
+    tijd,
+    label,
+    sys,
+    dia,
+    hr
+  });
+
+  tekenBPLog();
+
+  document.getElementById("bpSys").value = "";
+  document.getElementById("bpDia").value = "";
+  document.getElementById("bpHr").value = "";
+
+  bewaar();
+
+}
 
 
-    const sys =
-        parseFloat(
-            row.querySelector(".bp-sys").value
-        );
+function verwijderBP(index) {
 
-    const dia =
-        parseFloat(
-            row.querySelector(".bp-dia").value
-        );
+  bpLog.splice(index,1);
+
+  tekenBPLog();
+  bewaar();
+
+}
 
 
-    if(!Number.isFinite(sys) ||
-       !Number.isFinite(dia)) {
+function tekenBPLog() {
 
-        return;
+  const div =
+    document.getElementById("bpLog");
+
+  if (!bpLog.length) {
+
+    div.innerHTML =
+      "<p class='text-gray-500'>Nog geen bloeddrukmetingen.</p>";
+
+    return;
+
+  }
+
+  div.innerHTML =
+    bpLog.map((item,index) => `
+
+      <div class="p-3 mb-2 bg-red-50 rounded-xl">
+
+        <div class="font-bold">
+          ${item.datum} ${item.tijd}
+        </div>
+
+        <div class="text-lg">
+          ${item.label || ""}
+          ${item.sys}/${item.dia}
+          — HR ${item.hr}
+        </div>
+
+        <button
+          class="mt-2 bg-red-200 px-4 py-2 rounded-xl"
+          onclick="verwijderBP(${index})">
+
+          ❌ Verwijderen
+
+        </button>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+/* =========================
+   LOKALE OPSLAG
+========================= */
+
+function verzamelGegevens() {
+
+  const voor =
+    parseFloat(
+      document.getElementById("gewichtVoor").value
+    );
+
+  const droog =
+    parseFloat(
+      document.getElementById("drooggewicht").value
+    );
+
+  const na =
+    parseFloat(
+      document.getElementById("gewichtNa").value
+    );
+
+  const type =
+    document.getElementById("dialyseType").value;
+
+  const toeslag =
+    type === "nacht" ? 0.3 : 0.6;
+
+  let geplandeUF = "";
+
+  if (!isNaN(voor) && !isNaN(droog)) {
+    geplandeUF =
+      (voor - droog + toeslag).toFixed(1);
+  }
+
+  let werkelijkeUF = "";
+
+  if (!isNaN(voor) && !isNaN(na)) {
+    werkelijkeUF =
+      (voor - na).toFixed(1);
+  }
+
+  const totaalVocht =
+    drankLog.reduce(
+      (sum,item) => sum + Number(item.ml),
+      0
+    ) +
+    (parseFloat(
+      document.getElementById("etenVocht").value
+    ) || 0);
+
+  const taxi =
+    "Heen: " +
+    document.getElementById("heenVertrek").value +
+    " - " +
+    document.getElementById("heenAankomst").value +
+    " (" +
+    document.getElementById("heenNotitie").value +
+    ") | " +
+
+    "Terug: " +
+    document.getElementById("terugVertrek").value +
+    " - " +
+    document.getElementById("terugAankomst").value +
+    " (" +
+    document.getElementById("terugNotitie").value +
+    ")";
+
+  const bp =
+    bpLog.map(item =>
+      `${item.datum} ${item.tijd} ${item.label || ""}: ${item.sys}/${item.dia} HR ${item.hr}`
+    ).join(" | ");
+
+  return {
+
+    startDatum:
+      document.getElementById("startDatum").value,
+
+    eindDatum:
+      document.getElementById("eindDatum").value,
+
+    dialyse:
+      type,
+
+    toeslagKg:
+      toeslag,
+
+    gewichtVoor:
+      isNaN(voor) ? "" : voor,
+
+    drooggewicht:
+      isNaN(droog) ? "" : droog,
+
+    gewichtNa:
+      isNaN(na) ? "" : na,
+
+    geplandeUF,
+    werkelijkeUF,
+
+    bloeddruk:
+      bp,
+
+    drinkVocht:
+      drankLog.reduce(
+        (sum,item) => sum + Number(item.ml),
+        0
+      ),
+
+    etenVocht:
+      parseFloat(
+        document.getElementById("etenVocht").value
+      ) || 0,
+
+    totaalVocht,
+
+    dranklog:
+      drankLog.map(
+        item => `${item.tijd}: ${item.ml} ml`
+      ).join(" | "),
+
+    taxi,
+
+    notities:
+      document.getElementById("notities").value
+
+  };
+
+}
+
+
+function bewaar() {
+
+  const gegevens =
+    verzamelGegevens();
+
+  localStorage.setItem(
+    "dialysemonitorGegevens",
+    JSON.stringify(gegevens)
+  );
+
+  localStorage.setItem(
+    "dialysemonitorDrankLog",
+    JSON.stringify(drankLog)
+  );
+
+  localStorage.setItem(
+    "dialysemonitorBPLog",
+    JSON.stringify(bpLog)
+  );
+
+}
+
+
+/* =========================
+   GEGEVENS TERUGZETTEN
+========================= */
+
+function laadGegevens() {
+
+  try {
+
+    const opgeslagen =
+      localStorage.getItem(
+        "dialysemonitorGegevens"
+      );
+
+    const opgeslagenDrank =
+      localStorage.getItem(
+        "dialysemonitorDrankLog"
+      );
+
+    const opgeslagenBP =
+      localStorage.getItem(
+        "dialysemonitorBPLog"
+      );
+
+    if (opgeslagenDrank) {
+
+      drankLog =
+        JSON.parse(opgeslagenDrank);
 
     }
 
+    if (opgeslagenBP) {
 
-    const map =
-        (sys + 2 * dia) / 3;
+      bpLog =
+        JSON.parse(opgeslagenBP);
 
+    }
 
-    row.querySelector(".bp-map")
-        .innerText =
-        "MAP: " +
-        map.toFixed(0) +
-        " mmHg";
+    if (opgeslagen) {
+
+      const d =
+        JSON.parse(opgeslagen);
+
+      const velden = [
+
+        "startDatum",
+        "eindDatum",
+        "dialyseType",
+        "gewichtVoor",
+        "drooggewicht",
+        "gewichtNa",
+        "etenVocht",
+        "notities",
+        "heenVertrek",
+        "heenAankomst",
+        "heenNotitie",
+        "terugVertrek",
+        "terugAankomst",
+        "terugNotitie"
+
+      ];
+
+      velden.forEach(id => {
+
+        const element =
+          document.getElementById(id);
+
+        if (element && d[id] !== undefined) {
+
+          element.value = d[id];
+
+        }
+
+      });
+
+    }
+
+  } catch(error) {
+
+    console.log(
+      "Lokale gegevens konden niet worden geladen:",
+      error
+    );
+
+  }
+
+  tekenDrankLog();
+  tekenBPLog();
+  berekenUF();
+  berekenVocht();
 
 }
 
 
-/* =====================================================
-   OPSLAAN
-===================================================== */
+/* =========================
+   OPSLAAN GOOGLE SHEET
+========================= */
 
 async function dataOpslaan() {
 
-    const saveBtn =
-        document.getElementById("saveBtn");
+  const status =
+    document.getElementById("status");
 
-    const status =
-        document.getElementById("statusMessage");
+  const data =
+    verzamelGegevens();
 
+  /* Eerst lokaal bewaren */
+  bewaar();
 
-    saveBtn.disabled = true;
+  status.textContent =
+    "⏳ Bezig met opslaan...";
 
-    saveBtn.innerText =
-        "⏳ Opslaan...";
+  try {
 
+    /*
+      BELANGRIJK:
+      text/plain voorkomt een CORS-preflight.
+      Apps Script kan de inhoud nog steeds
+      uitlezen via e.postData.contents.
+    */
 
-    try {
+    const response =
+      await fetch(
+        WEB_APP_URL,
+        {
+          method:"POST",
 
-        const pre =
-            parseFloat(
-                document.getElementById("preWeight").value
-            );
+          mode:"no-cors",
 
-        const dry =
-            parseFloat(
-                document.getElementById("dryWeight").value
-            );
+          headers:{
+            "Content-Type":
+              "text/plain;charset=UTF-8"
+          },
 
-        const post =
-            parseFloat(
-                document.getElementById("postWeight").value
-            );
-
-
-        const toeslag =
-            dialyseType === "nacht"
-            ? 0.3
-            : 0.6;
-
-
-        let geplandeUF = "";
-
-        if(Number.isFinite(pre) &&
-           Number.isFinite(dry)) {
-
-            geplandeUF =
-                (pre - dry + toeslag)
-                .toFixed(2);
-
+          body:
+            JSON.stringify(data)
         }
-
-
-        let werkelijkeUF = "";
-
-        if(Number.isFinite(pre) &&
-           Number.isFinite(post)) {
-
-            werkelijkeUF =
-                (pre - post)
-                .toFixed(2);
-
-        }
-
-
-        /* BLOEDDRUK */
-
-        const bpRows =
-            document.querySelectorAll(
-                "#bpContainer > div"
-            );
-
-
-        const bloeddruk = [];
-
-
-        bpRows.forEach(row => {
-
-            const label =
-                row.querySelector(
-                    ".bp-label"
-                ).value || "Meting";
-
-
-            const tijd =
-                row.querySelector(
-                    ".bp-time"
-                ).innerText;
-
-
-            const sys =
-                row.querySelector(
-                    ".bp-sys"
-                ).value || "-";
-
-
-            const dia =
-                row.querySelector(
-                    ".bp-dia"
-                ).value || "-";
-
-
-            const hr =
-                row.querySelector(
-                    ".bp-hr"
-                ).value || "-";
-
-
-            let map = "-";
-
-
-            if(sys !== "-" &&
-               dia !== "-") {
-
-                map =
-                    (
-                        (
-                            Number(sys) +
-                            2 * Number(dia)
-                        ) / 3
-                    ).toFixed(0);
-
-            }
-
-
-            bloeddruk.push(
-                `${label} ${tijd}: ` +
-                `${sys}/${dia} HR ${hr} MAP ${map}`
-            );
-
-        });
-
-
-        /* DRANK */
-
-        const drinkvocht =
-            drinkRegistraties.reduce(
-                (totaal, item) =>
-                    totaal + Number(item.ml),
-                0
-            );
-
-
-        const etenVocht =
-            parseFloat(
-                document.getElementById(
-                    "etenVocht"
-                ).value
-            ) || 0;
-
-
-        const totaalVocht =
-            drinkvocht + etenVocht;
-
-
-        const drankLog =
-            drinkRegistraties
-                .map(
-                    item =>
-                        `${item.tijd}: ${item.ml} ml`
-                )
-                .join(" | ");
-
-
-        /* TAXI */
-
-        const taxi =
-            "Heen: " +
-            document.getElementById(
-                "taxiHeenVertrek"
-            ).value +
-            "-" +
-            document.getElementById(
-                "taxiHeenAankomst"
-            ).value +
-            " " +
-            document.getElementById(
-                "taxiHeenNotitie"
-            ).value +
-
-            " | Terug: " +
-
-            document.getElementById(
-                "taxiTerugVertrek"
-            ).value +
-            "-" +
-            document.getElementById(
-                "taxiTerugAankomst"
-            ).value +
-            " " +
-            document.getElementById(
-                "taxiTerugNotitie"
-            ).value;
-
-
-        /* DATUM */
-
-        const startDatum =
-            document.getElementById(
-                "startDate"
-            ).value;
-
-
-        const eindDatum =
-            document.getElementById(
-                "endDate"
-            ).value;
-
-
-        const data = {
-
-            datum:
-                startDatum +
-                " t/m " +
-                eindDatum,
-
-            dialyseType:
-                dialyseType,
-
-            toeslag:
-                toeslag,
-
-            preWeight:
-                Number.isFinite(pre)
-                ? pre
-                : "",
-
-            dryWeight:
-                Number.isFinite(dry)
-                ? dry
-                : "",
-
-            postWeight:
-                Number.isFinite(post)
-                ? post
-                : "",
-
-            geplandeUF:
-                geplandeUF,
-
-            werkelijkeUF:
-                werkelijkeUF,
-
-            bloeddruk:
-                bloeddruk.join(" | "),
-
-            drinkvocht:
-                drinkvocht,
-
-            etenVocht:
-                etenVocht,
-
-            totaalVocht:
-                totaalVocht,
-
-            drankLog:
-                drankLog,
-
-            taxi:
-                taxi,
-
-            notities:
-                document.getElementById(
-                    "notities"
-                ).value
-
-        };
-
-
-        const response =
-            await fetch(
-                WEB_APP_URL,
-                {
-                    method: "POST",
-                    body: JSON.stringify(data)
-                }
-            );
-
-
-        const result =
-            await response.json();
-
-
-        if(result.success) {
-
-            status.className =
-                "mb-4 p-4 rounded-xl text-sm " +
-                "font-bold bg-emerald-100 " +
-                "text-emerald-800";
-
-            status.innerText =
-                "✅ Gegevens opgeslagen in Google Sheet.";
-
-            status.classList.remove("hidden");
-
-        } else {
-
-            throw new Error(
-                result.error ||
-                "Opslaan mislukt"
-            );
-
-        }
-
-
-    } catch(error) {
-
-        status.className =
-            "mb-4 p-4 rounded-xl text-sm " +
-            "font-bold bg-red-100 text-red-800";
-
-        status.innerText =
-            "❌ Opslaan mislukt: " +
-            error.message;
-
-        status.classList.remove("hidden");
-
-    }
-
-
-    saveBtn.disabled = false;
-
-    saveBtn.innerText =
-        "💾 Opslaan naar Google Sheet";
+      );
+
+    /*
+      Bij no-cors kunnen we het antwoord
+      niet uitlezen. Daarom gaan we ervan
+      uit dat het verzoek verzonden is.
+    */
+
+    status.innerHTML =
+      "✅ Gegevens verzonden naar Google Sheet.<br>" +
+      "<span class='text-sm font-normal'>" +
+      "De gegevens blijven ook op deze tablet bewaard." +
+      "</span>";
+
+  } catch(error) {
+
+    console.error(error);
+
+    status.innerHTML =
+      "⚠️ Verzenden naar Google Sheet mislukt.<br>" +
+      "<span class='text-sm font-normal'>" +
+      "Je gegevens zijn WEL lokaal bewaard en gaan niet verloren." +
+      "</span>";
+
+  }
 
 }
+
+
+/* =========================
+   ALLES WISSEN
+========================= */
+
+function wisAlles() {
+
+  if (
+    !confirm(
+      "Weet je zeker dat je een nieuwe meting wilt beginnen? Alle lokaal opgeslagen gegevens worden gewist."
+    )
+  ) return;
+
+  localStorage.removeItem(
+    "dialysemonitorGegevens"
+  );
+
+  localStorage.removeItem(
+    "dialysemonitorDrankLog"
+  );
+
+  localStorage.removeItem(
+    "dialysemonitorBPLog"
+  );
+
+  location.reload();
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+window.addEventListener(
+  "load",
+  laadGegevens
+);
 
 </script>
 
